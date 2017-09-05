@@ -1,0 +1,5 @@
+.vs
+CSharpBotSample/obj
+CSharpBotSample/bin
+packages/*
+
