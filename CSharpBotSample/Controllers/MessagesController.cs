@@ -1,10 +1,12 @@
-﻿using System.Net;
+﻿#define _QNA_DIALOG
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
 using System;
+
 
 namespace CSharpBotSample
 {
@@ -19,8 +21,12 @@ namespace CSharpBotSample
         {
             if (activity.Type == ActivityTypes.Message)
             {
-#if _NOUSE
+#if _ROOT_DIALOG
                 await Conversation.SendAsync(activity, () => new Dialogs.RootDialog());
+#elif _QNA_DIALOG
+                var dil = new Dialogs.SimpleQnAMakerDialog();
+               
+                await Conversation.SendAsync(activity, () => new Dialogs.SimpleQnAMakerDialog());
 #else
                 ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
                 // 文字数をカウント
